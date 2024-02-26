@@ -96,6 +96,40 @@ namespace MVC_1.Controllers
 
         public ActionResult CreatePagamenti()
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["MyDb"].ToString();
+            SqlConnection conn = new SqlConnection(connectionString);
+
+            List<Dipendente> dipendenti = new List<Dipendente>();
+            try
+            {
+                conn.Open();
+
+                string query = "SELECT IDDipendente,Nome,Cognome FROM Dipendenti ";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Dipendente dipendente = new Dipendente();
+                    dipendente.IDDipendente = Convert.ToInt32(reader["IDDipendente"]);
+                    dipendente.Nome = reader["Nome"].ToString();
+                    dipendente.Cognome = reader["Cognome"].ToString();
+
+                    dipendenti.Add(dipendente);
+                }
+                ViewBag.Dipendenti = dipendenti;
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"Errore durante il recupero dei dati: {ex.Message}");
+            }
+            finally
+            {
+                conn.Close();
+            }
+
             return View();
         }
 

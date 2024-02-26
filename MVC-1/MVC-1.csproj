@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetailDipendente.cs" />
     <Compile Include="Models\Dipendente.cs" />
     <Compile Include="Models\Pagamento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +181,8 @@
     <Content Include="Views\Home\CreateDipendente.cshtml" />
     <Content Include="Views\Home\CreatePagamenti.cshtml" />
     <Content Include="Views\Home\Pagamenti.cshtml" />
+    <Content Include="Views\Home\EditDipendente.cshtml" />
+    <Content Include="Views\Home\DetailDipendente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

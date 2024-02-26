@@ -1,9 +1,9 @@
-﻿using MVC_1.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Mvc;
+using MVC_1.Models;
 
 namespace MVC_1.Controllers
 {
@@ -39,9 +39,7 @@ namespace MVC_1.Controllers
                     dipendente.NFigliACarico = Convert.ToInt32(reader["NFigliACarico"]);
 
                     dipendenti.Add(dipendente);
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -70,8 +68,8 @@ namespace MVC_1.Controllers
                 conn.Open();
 
                 string query =
-                    "INSERT INTO Dipendenti (Nome,Cognome,Indirizzo,CodiceFiscale,Mansione,Coniugato,NFigliACarico) " +
-                    "VALUES (@Nome,@Cognome,@Indirizzo,@CodiceFiscale,@Mansione,@Coniugato,@NFigliACarico) ";
+                    "INSERT INTO Dipendenti (Nome,Cognome,Indirizzo,CodiceFiscale,Mansione,Coniugato,NFigliACarico) "
+                    + "VALUES (@Nome,@Cognome,@Indirizzo,@CodiceFiscale,@Mansione,@Coniugato,@NFigliACarico) ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nome", dipendente.Nome);
@@ -83,7 +81,6 @@ namespace MVC_1.Controllers
                 cmd.Parameters.AddWithValue("@NFigliACarico", dipendente.NFigliACarico);
 
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {
@@ -101,6 +98,7 @@ namespace MVC_1.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult CreatePagamenti(Pagamento p)
         {
@@ -112,8 +110,8 @@ namespace MVC_1.Controllers
                 conn.Open();
 
                 string query =
-                    "INSERT INTO Pagamenti (IDDipendente,DataPagamento,Ammontare,Tipo) " +
-                    "VALUES (@IDDipendente,@DataPagamento,@Ammontare,@Tipo) ";
+                    "INSERT INTO Pagamenti (IDDipendente,DataPagamento,Ammontare,Tipo) "
+                    + "VALUES (@IDDipendente,@DataPagamento,@Ammontare,@Tipo) ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IDDipendente", p.IDDipendente);
@@ -122,7 +120,6 @@ namespace MVC_1.Controllers
                 cmd.Parameters.AddWithValue("@Tipo", p.Tipo);
 
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {
@@ -133,7 +130,7 @@ namespace MVC_1.Controllers
                 conn.Close();
             }
 
-            return View();
+            return RedirectToAction("Pagamenti");
         }
 
         public ActionResult Pagamenti()
@@ -163,7 +160,6 @@ namespace MVC_1.Controllers
                     pagamento.Tipo = reader["Tipo"].ToString();
 
                     pagamenti.Add(pagamento);
-
                 }
             }
             catch (Exception ex)
@@ -175,19 +171,6 @@ namespace MVC_1.Controllers
                 conn.Close();
             }
             return View(pagamenti);
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

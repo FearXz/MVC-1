@@ -10,7 +10,5 @@
         public string Mansione { get; set; }
         public bool Coniugato { get; set; }
         public int NFigliACarico { get; set; }
-
-
     }
 }

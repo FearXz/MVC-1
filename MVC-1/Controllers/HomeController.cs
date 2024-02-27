@@ -20,7 +20,7 @@ namespace MVC_1.Controllers
             {
                 conn.Open();
 
-                string query = "SELECT * FROM Dipendenti";
+                string query = "SELECT * FROM Dipendenti WHERE Attivo=1";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -178,7 +178,8 @@ namespace MVC_1.Controllers
             {
                 conn.Open();
 
-                string query = "SELECT * FROM Pagamenti";
+                string query =
+                    "SELECT p.*,d.Nome,d.Cognome FROM Pagamenti as p inner join Dipendenti as d on p.IDDipendente = d.IDDipendente";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -192,6 +193,8 @@ namespace MVC_1.Controllers
                     pagamento.DataPagamento = Convert.ToDateTime(reader["DataPagamento"]);
                     pagamento.Ammontare = Convert.ToDecimal(reader["Ammontare"]);
                     pagamento.Tipo = reader["Tipo"].ToString();
+                    pagamento.NomeCompleto =
+                        reader["Nome"].ToString() + " " + reader["Cognome"].ToString();
 
                     pagamenti.Add(pagamento);
                 }
@@ -216,10 +219,12 @@ namespace MVC_1.Controllers
             {
                 conn.Open();
 
-                string query = "DELETE FROM Dipendenti WHERE IDDipendente = @IDDipendente";
+                string query =
+                    "UPDATE Dipendenti  SET Attivo = @stato WHERE  IDDipendente = @IDDipendente";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@IDDipendente", id);
+                cmd.Parameters.AddWithValue("@stato", false);
 
                 cmd.ExecuteNonQuery();
             }
